@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/icon-extra.css" />
+		<link rel="stylesheet" href="css/common.css" />
+		<!--<link rel="stylesheet" type="text/css" href="SimpleCalendar/stylesheets/simple-calendar.css">-->
+		
+
+		<style>
+			.main-content{width: 100%; margin: auto;position: relative;}
+			.title-header{
+			text-align: center;
+			height: 10%;
+			line-height: 4rem;
+			/*vertical-align: bottom;*/
+			border-bottom: 1px solid #bbbbbb;
+			box-sizing:content-box;
+			background: #f8f8f8;color: #101010;
+			position: relative;
+			}
+			.title-header>p.calendar{
+				width: 4.6rem;
+				/*border: 1px solid #ddd;*/
+				text-align: center;
+				line-height: 2.8rem;
+				height: 2.8rem;
+				position: absolute;
+				right: 0.4rem;
+				top: 0.6rem;
+			}
+			.title-header>div.datas{
+				position: absolute;
+				width: 8rem;
+				height: 2.8rem;
+				line-height: 2.8rem;
+				left: 0;
+				top: 0.6rem;
+				text-align: left;
+			}
+			.title-header>div.datas>p{
+				display: inline-block;
+				margin: 0;
+			}
+
+		
+			/*.sc-header>.sc-actions:nth-of-type(1){
+				width: 40% !important;
+			}
+			.sc-header>.sc-actions:nth-of-type(1)>select{
+				width: 40px;
+			}
+			.sc-header>.sc-actions:nth-of-type(2){
+				width: 40% !important;
+			}
+			.sc-header>.sc-actions:nth-of-type(2)>select{
+				width: 30px;
+			}
+			.sc-header>.sc-actions:nth-of-type(3){
+				width: 20% !important;
+			}
+			.sc-header>.sc-actions:nth-of-type(4){
+				display: none;
+			}
+			.sc-actions div{
+				vertical-align: middle !important;
+			}*/
+			
+			
+			
+			#sumtreList{
+				margin-top: 4rem;
+			}
+			#refreshContainer{
+				margin-top: 4rem;
+				height: 90%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="main-container">
+			<div class="title-header">
+				<div class="datas">
+					<p>	
+						<span class="mui-icon mui-icon-arrowleft" onclick="tohistory();"></span>
+							
+					</p>
+				
+
+				</div>
+				<span>Task assigned</span>
+				<p class="calendar">
+					<span class="mui-icon-extra mui-icon-extra-calendar icon-rili1"></span>
+				</p>
+
+			</div>
+			
+			<div id="sumtreList">
+					<!--下拉刷新容器-->
+				<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+				  <div class="mui-scroll">
+				    <!--数据列表-->
+				    <ul class="mui-table-view mui-table-view-chevron" id="listContainerSumtre">
+				      <li>
+				      	<h3>Task 1</h3>
+				      	<p>2017/08/10</p>
+				      	<p>Organization:*****</p>
+				      	<p>Engineer:xxx、xxx</p>
+				      </li>
+				      <li>
+				      	<h3>Task 1</h3>
+				      	<p>2017/08/10</p>
+				      	<p>Organization:*****</p>
+				      	<p>Engineer:xxx、xxx</p>
+				      </li>
+				      <li>
+				      	<h3>Task 1</h3>
+				      	<p>2017/08/10</p>
+				      	<p>Organization:*****</p>
+				      	<p>Engineer:xxx、xxx</p>
+				      </li>
+				      <li>
+				      	<h3>Task 1</h3>
+				      	<p>2017/08/10</p>
+				      	<p>Organization:*****</p>
+				      	<p>Engineer:xxx、xxx</p>
+				      </li>
+				       <li>
+				      	<h3>Task 1</h3>
+				      	<p>2017/08/10</p>
+				      	<p>Organization:*****</p>
+				      	<p>Engineer:xxx、xxx</p>
+				      </li>
+				      <li>
+				      	<h3>Task 1</h3>
+				      	<p>2017/08/10</p>
+				      	<p>Organization:*****</p>
+				      	<p>Engineer:xxx、xxx</p>
+				      </li>
+				      <li>
+				      	<h3>Task 1</h3>
+				      	<p>2017/08/10</p>
+				      	<p>Organization:*****</p>
+				      	<p>Engineer:xxx、xxx</p>
+				      </li>
+				      <li>
+				      	<h3>Task 1</h3>
+				      	<p>2017/08/10</p>
+				      	<p>Organization:*****</p>
+				      	<p>Engineer:xxx、xxx</p>
+				      </li>
+				       <li>
+				      	<h3>Task 1</h3>
+				      	<p>2017/08/10</p>
+				      	<p>Organization:*****</p>
+				      	<p>Engineer:xxx、xxx</p>
+				      </li>
+				      <li>
+				      	<h3>Task 1</h3>
+				      	<p>2017/08/10</p>
+				      	<p>Organization:*****</p>
+				      	<p>Engineer:xxx、xxx</p>
+				      </li>
+				      <li>
+				      	<h3>Task 1</h3>
+				      	<p>2017/08/10</p>
+				      	<p>Organization:*****</p>
+				      	<p>Engineer:xxx、xxx</p>
+				      </li>
+				      <li>
+				      	<h3>Task 1</h3>
+				      	<p>2017/08/10</p>
+				      	<p>Organization:*****</p>
+				      	<p>Engineer:xxx、xxx</p>
+				      </li>
+				    </ul>
+				  </div>
+				</div>
+			</div>
+	
+			
+		</div>
+	
+	</body>
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script src="js/mui.min.js"></script>
+	<script src="js/mui.enterfocus.js"></script>
+	<script type="text/javascript" src="SimpleCalendar/javascripts/simple-calendar.js"></script>
+	<script>
+
+
+		function tohistory(){
+			window.history.go(-1);
+		}
+
+		mui.init({
+		  pullRefresh : {
+		    container:"#refreshContainer",//下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+		    down : {
+		      style:'circle',//必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+		      color:'#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+		      height:'50px',//可选,默认50px.下拉刷新控件的高度,
+		      range:'100px', //可选 默认100px,控件可下拉拖拽的范围
+		      offset:'0px', //可选 默认0px,下拉刷新控件的起始位置
+		      auto: true,//可选,默认false.首次加载自动上拉刷新一次
+		      callback :pullfresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+		    }
+		  }
+		});
+		
+		function pullfresh() {
+//			mui.ajax('http://192.168.0.101:8080/h5plus/findByStatus?userid=a@b&status=1&type=1',{
+////			mui.ajax('http://192.168.31.156:8080/h5plus/findByStatus?userid='+plus.storage.getItem("account")+"&status=1",{
+////			data:{
+////				username:'username',
+////				password:'password'
+////			},
+//			dataType:'jsonp',//服务器返回json格式数据
+//			type:'GET',//HTTP请求类型
+//			timeout:10000,//超时时间设置为10秒；
+////			headers:{'Content-Type':'application/json'},	              
+//			success:function(data){
+//				
+//				var str = "";
+//				
+//				for(var i=0;i<data.length;i++){
+//					
+//					str+= "<li>"+data[i]['time']+"</li>";
+//					console.log(data[i]['time']);
+//				}
+//				$("#functionItem").append(str);
+////				mui("#functionItem").append("");
+//				//服务器返回响应，根据响应结果，分析是否登录成功；
+//			},
+//			error:function(xhr,type,errorThrown){
+//				//异常处理；
+//				console.log(type);
+//			}
+//		});
+		     //业务逻辑代码，比如通过ajax从服务器获取新数据；
+		    
+		     //注意：
+		     //1、加载完新数据后，必须执行如下代码，true表示没有更多数据了：
+		     //2、若为ajax请求，则需将如下代码放置在处理完ajax响应数据之后
+		     
+		         //跨域（可跨所有域名）
+		         
+//		         var url='http://192.168.0.101:8080/WorkGroupManagment/open/getGroupById"
+//			       +"?id=1&callback=?';
+			   $.ajax({
+			     url:"http://192.168.0.101:8080/h5plus/findByStatus?userid=a@b&status=1&type=1",
+			     dataType:'jsonp',
+//			     processData: false, 
+				async:false,
+				jsonp: "callbackparam",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(默认为:callback)
+	            jsonpCallback:"success_jsonpCallback",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+
+			     type:'get',
+			     success:function(data){
+			     	alert(43);
+			       console.log(data);
+			       
+					for(var i=0;i<data.length;i++){
+						console.log("<li>"+data[i]['time']+"</li>");
+						$("#listContainerSumtre").append("<li>"+data[i]['time']+"</li>");
+						
+					}
+			     },
+			     error:function(XMLHttpRequest, textStatus, errorThrown) {
+			     	console.log(XMLHttpRequest.status+"-----------"+XMLHttpRequest.readyState+"------------------"+textStatus);
+//			       alert(XMLHttpRequest.status);
+//			       alert(XMLHttpRequest.readyState);
+//			       alert(textStatus);
+			     }});
+			     
+			     
+//			     $.jsonp({
+//				  "url": "http://192.168.0.101:8080/h5plus/findByStatus?userid=a@b&status=1&type=1",
+//				  "success": function(data) {
+//				    console.log(43);
+//				  },
+//				  "error": function(d,msg) {
+//				    alert("Could not find user "+msg);
+//				  }
+//				});
+		         
+//      $.getJSON("http://192.168.0.101:8080/h5plus/findByStatus?userid=a@b&status=1&type=1",function(json){
+//       
+//       //要求远程请求页面的数据格式为： ?(json_data)  
+//       //例如：
+//       //?([{"_name":"湖南省","_regionId":134},{"_name":"北京市","_regionId":143}])
+////       alert(json[0]._name);
+//			console.log(json);
+//			var str = "";
+//				
+//				
+//			
+//
+//       });　　
+//       
+		     this.endPullupToRefresh(true|false);
+		}
+		
+		
+//		var options = {
+//	      width: '100%',
+//	      height: '500px;',
+//	      language: 'CH', //语言
+//	      showLunarCalendar: true, //阴历
+//	      showHoliday: true, //休假
+//	      showFestival: true, //节日
+//	      showLunarFestival: true, //农历节日
+//	      showSolarTerm: true, //节气
+//	      showMark: true, //标记
+//	      timeRange: {
+//	        startYear: 1900,
+//	        endYear: 2049
+//	      },
+//	      mark: {
+//	        '2016-5-5': '上学',
+//	        '2017-8-10': '上学'
+//	      },
+//	      theme: {
+//	        changeAble: false,
+//	        weeks: {
+//	          backgroundColor: '#FBEC9C',
+//	          fontColor: '#4A4A4A',
+//	          fontSize: '20px',
+//	        },
+//	        days: {
+//	          backgroundColor: '#ffffff',
+//	          fontColor: '#565555',
+//	          fontSize: '24px'
+//	        },
+//	        todaycolor: 'orange',
+//	        activeSelectColor: 'orange',
+//	      }
+//	    }
+//		
+//	    var myCalendar = new SimpleCalendar('#container',options);
+//	    
+	</script>
+</html>

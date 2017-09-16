@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/icon-extra.css" />
+		<link rel="stylesheet" href="css/common.css" />
+		<!--<link rel="stylesheet" type="text/css" href="SimpleCalendar/stylesheets/simple-calendar.css">-->
+		<link rel="stylesheet" href="css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css"/>
+
+		<style>
+			.main-content{width: 100%;margin: auto;position: relative;}
+			/*.main-content{padding-top: 10%;}*/
+			.title-header{text-align: center;
+			height: 4rem;
+			line-height: 4rem;
+			border-bottom: 1px solid #bbbbbb;
+			box-sizing:content-box;
+			background: #f8f8f8;color: #101010;
+			position: relative;
+			}
+			.title-header>p.calendar{
+				width: 4.6rem;
+				/*border: 1px solid #ddd;*/
+				text-align: center;
+				line-height: 2.8rem;
+				height: 2.8rem;
+				position: absolute;
+				right: 0.4rem;
+				top: 0.6rem;
+			}
+			.title-header>div.datas{
+				position: absolute;
+				width: 8rem;
+				height: 2.8rem;
+				line-height: 2.8rem;
+				left: 0;
+				top: 0.6rem;
+				text-align: left;
+			}
+			.title-header>div.datas>p{
+				display: inline-block;
+				margin: 0;
+			}
+			.title-header>div.datas>div{
+				display: inline-block;
+				margin: 0;
+			}
+			.title-header>div.datas>div>p{
+				line-height: 1rem;
+				font-size: 0.7rem;
+			}
+			.title-header>div.datas>div>p:nth-of-type(1){
+				/*padding: 1rem 0 0 0;*/
+			}
+			
+			/*.bottom-button{
+				width: 100%;
+				position: fixed;
+				bottom: 0;
+			}*/
+	
+			#refreshContainer{
+				margin-top: 4rem;
+			}
+			#sumtreList h3{
+				margin: 0;
+			}
+			
+			.head-wrap{
+				height: 4rem;
+				border-bottom: 1px solid #bbbbbb;
+				box-sizing:content-box;
+				background: #f8f8f8;color: #101010;
+				padding:0 0.5rem;
+			}
+			
+			#listContainerSumtre>li{
+				padding: 0.3rem 2rem;
+				border-bottom: 1px dotted #ccc;
+			}
+			.mui-content{height: inherit !important;}
+
+			#listContainerSumtre>li>h4,#listContainerSumtre>li>h5{
+				margin: 0; padding: 0;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="main-container">
+			<div class="title-header">
+				<div class="datas">
+					<p>	
+						<span class="mui-icon mui-icon-arrowleft" onclick="tohistory();"></span>
+							
+					</p>
+
+					
+					<div>
+						<p>Thursday</p>
+						<p>2017.08.10</p>
+					</div>
+
+				</div>
+				<span>My Task</span>
+				<p class="calendar" id="showUserPicker">
+					<span class="mui-icon-extra mui-icon-extra-calendar icon-rili1">
+						<p class="calendar" id="showUserPicker">
+						<!--<select id="statusChose">
+							<option value="0">Lift Status</option>
+							<option value="1">To be maintained</option>
+							<option value="2">Maintenance in progress</option>
+							<option value="3">Suspended</option>
+							<option value="4">Maintenance completed</option>
+							<option value="5">Overdue</option>
+						</select>-->
+				</p>
+					</span>
+				</p>
+
+			</div>
+						
+			
+			<div id="sumtreList">
+					<!--下拉刷新容器-->
+				<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+				  <div class="mui-scroll">
+				    <!--数据列表-->
+				    <ul class="mui-table-view mui-table-view-chevron" id="listContainerSumtre">
+				     	
+				    </ul>
+				  </div>
+				</div>
+			</div>
+	
+			
+		</div>
+		<!--<div class="bottom-button clearfix">-->
+			<!--<div>Task completed</div>
+			<div>Task assigned</div>
+			<div>Task saved</div>-->
+		<!--</div>-->
+	</body>
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script src="js/mui.min.js"></script>
+	<script src="js/mui.enterfocus.js"></script>
+	<!--<script type="text/javascript" src="SimpleCalendar/javascripts/simple-calendar.js"></script>-->
+	<script src="js/mui.picker.js"></script>
+	<script src="js/mui.poppicker.js"></script>
+	<script>
+		
+		var status = 0;
+		
+		var picker = new mui.PopPicker();
+		 picker.setData([
+		 	{value:'',text:'Lift Status'},
+		 	{value:'1',text:'To be maintained'},
+		 	{value:'2',text:'Maintenance in progress'},
+		 	{value:'3',text:'Suspended'},
+		 	{value:'4',text:'Maintenance completed'},
+		 	{value:'5',text:'Overdue'}
+		 	]);
+		 $("#showUserPicker").click(function(){
+		 	picker.show(function (selectItems) {
+//			    console.log(selectItems[0].text);//智子
+//			    console.log(selectItems[0].value);//zz 
+				status = selectItems[0].value;
+			})
+		 });
+
+
+		function tohistory(){
+			window.history.go(-1);
+		}
+
+		mui.init({
+		  pullRefresh : {
+		    container:"#refreshContainer",//下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+		    down : {
+		      style:'circle',//必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+		      color:'#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+		      height:'50px',//可选,默认50px.下拉刷新控件的高度,
+		      range:'100px', //可选 默认100px,控件可下拉拖拽的范围
+		      offset:'0px', //可选 默认0px,下拉刷新控件的起始位置
+		      auto: true,//可选,默认false.首次加载自动上拉刷新一次
+		      callback :pullfresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+		    }
+		  }
+		});
+		
+		function pullfresh() {
+		
+
+			   $.ajax({//172.18.1.222 192.168.0.101
+			     url:plus.storage.getItem("URL")+"/h5plus/findByStatus?userid="+plus.storage.getItem("account")+"&status="+status+"&type="+plus.storage.getItem("organizationType"),
+			     dataType:'json',
+			     type:'get',
+			     success:function(data){
+			       
+					for(var i=0;i<data.length;i++){
+						var status = data[i]['status']=='1'?'to be maintenance':'off'; 
+				      var str = 
+				      "<li deviceid="+data[i]['device']['id']+">"+
+				      	"<h5>Task ID:"+data[i]['taskid']+"</h5>"+
+				      	"<p>start time:"+data[i]['start_time']+"</p>"+
+				      	"<p>Organization:"+data[i]['device']['organization']['organizationName']+"</p>"+
+				      	"<p>Engineer:"+data[i]['user']['lastName']+"</p>"+
+				      	"<p>status:"+status+"</p>"+
+				      "</li>";
+						$("#listContainerSumtre").append(str);
+						
+					}
+			     },
+			     error:function(XMLHttpRequest, textStatus, errorThrown) {
+			     	console.log(XMLHttpRequest.status+"-----------"+XMLHttpRequest.readyState+"------------------"+textStatus);
+			     }});
+			     
+			     
+		     this.endPullupToRefresh(true|false);
+		} 
+        
+        mui("#listContainerSumtre").on('tap','li',function(e){
+        	
+        	location.href = "elevatorInfo.html?deviceid="+$(this).attr("deviceid");
+		  
+		}) 
+    
+	</script>
+</html>

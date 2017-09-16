@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			.main-content{width: 65%;margin: auto;position: relative;}
+			.logo-container,.logo-mark{text-align: center;}
+			.logo-container{padding-top: 30%;}
+			.logo-mark{padding-bottom: 32%;}
+			.button-container{position: relative;padding-top: 10%;}
+			.logo{width: 45%;height: 45%;}
+			.mark{width: 70%; height: 70%;}
+			.to-left,.to-right{position: absolute;}
+			.to-left{left: 0;}
+			.to-right{right: 0;}
+		</style>
+
+	</head>
+
+	<body>
+
+		<div class="main-container">
+			<div class="main-content">
+				<div class="logo-container">
+				<img class="logo" src="images/raw_1503459007.png"/>
+			</div>
+			<div class="logo-mark">
+				<img class="mark" src="images/raw_1503459065.png" />
+			</div>
+			<div class="input-area">
+				<p>
+					<input type="text" id="account" placeholder="Username"/>
+				</p>
+				<p>
+					<input type="text" id="password" placeholder="Password"/>
+				</p>
+				<p class="button-container">
+					<button class="to-left mui-btn mui-btn-success mui-btn-outlined"><span onclick="signup()">Sign Up</span></button>
+					<button class="to-right mui-btn mui-btn-success mui-btn-outlined"><span onclick="Login()">Sign In</span></button>
+					  
+				</p>
+			</div>
+			</div>
+			
+	
+		</div>
+
+		
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.enterfocus.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		
+		<script>
+			mui.plusReady(function() {
+				mui.toast('正在验证本地缓存身份信息，请稍后！');
+				var tempaccount = plus.storage.getItem("account");
+				var temppassword = plus.storage.getItem("password");
+				if (tempaccount != "" && temppassword != "") {
+					var loginInfo = {
+						account: tempaccount,
+						password: temppassword
+					};
+					app.login(loginInfo, function(err) {
+						if (err) {
+							mui.toast('验证本地缓存身份信息失败，请登录！');
+							return;
+						}
+						plus.storage.setItem("url","http://www.Test.LG.softgrid.exdorean.com:80");
+						clicked('LIFTPROF.html');
+					});
+				}
+				
+			})
+
+			function Login() {
+				var accountBox = document.getElementById('account');
+				var passwordBox = document.getElementById('password');
+				var loginInfo = {
+					account: accountBox.value,
+					password: passwordBox.value
+				};
+				app.login(loginInfo, function(err) {
+					if (err) {
+						plus.nativeUI.toast(err);
+						return;
+					}
+					if(loginInfo.password=="123456"){
+						mui.toast("首次使用，请修改登陆密码！");
+						return;
+					}
+					location.href=""
+					clicked('LIFTPROF.html');
+				
+				});
+			}
+			function signup(){
+				location.href = "signUp.html";
+			}
+		</script>
+				
+	</body>
+
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/icon-extra.css" />
+		<link rel="stylesheet" href="css/common.css" />
+		<!--<link rel="stylesheet" type="text/css" href="SimpleCalendar/stylesheets/simple-calendar.css">-->
+		
+
+		<style>
+			.main-content{width: 100%; margin: auto;position: relative;}
+			.title-header{
+			text-align: center;
+			height: 10%;
+			line-height: 4rem;
+			/*vertical-align: bottom;*/
+			border-bottom: 1px solid #bbbbbb;
+			box-sizing:content-box;
+			background: #f8f8f8;color: #101010;
+			position: relative;
+			}
+			.title-header>p.calendar{
+				width: 4.6rem;
+				/*border: 1px solid #ddd;*/
+				text-align: center;
+				line-height: 2.8rem;
+				height: 2.8rem;
+				position: absolute;
+				right: 0.4rem;
+				top: 0.6rem;
+			}
+			.title-header>div.datas{
+				position: absolute;
+				width: 8rem;
+				height: 2.8rem;
+				line-height: 2.8rem;
+				left: 0;
+				top: 0.6rem;
+				text-align: left;
+			}
+			.title-header>div.datas>p{
+				display: inline-block;
+				margin: 0;
+			}
+
+			.detail-container>p{padding: 1rem 3rem;}
+			.bottomArea{width: 100%;height: 10%;position: fixed;bottom: 0;z-index: 2;}
+		</style>
+	</head>
+	<body>
+		<div class="main-container">
+			<div class="title-header">
+			
+				<span>Task Details</span>
+			
+			</div>
+
+
+			<div class="detail-container">
+				<p>Task ID:D1234</p>
+			</div>
+			<div class="detail-container">
+				<p>Task Type:</p>
+				<p>Lift Status:</p>
+				<p>Lift Details1:</p>
+				<p>Lift Details2:</p>
+			</div>
+
+
+
+
+		</div>
+		
+	<div class="bottomArea">
+			<a type="button" href="toprocessing()" class="mui-btn">Start</a>
+			<a onclick="tohistory()" class="mui-btn">Return</a>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script src="js/mui.min.js"></script>
+	<script src="js/mui.enterfocus.js"></script>
+	<script type="text/javascript" src="SimpleCalendar/javascripts/simple-calendar.js"></script>
+	<script>
+		function toprocessing(){
+			location.href = "Processing.html?taskid="+GetQueryString("taskid")
+		}  
+
+		function GetQueryString(name){
+		     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+		     var r = window.location.search.substr(1).match(reg);
+		     if(r!=null)return  unescape(r[2]); return null;
+		}
+
+		function tohistory(){
+			window.history.go(-1);
+		}
+
+	</script>
+</html>
