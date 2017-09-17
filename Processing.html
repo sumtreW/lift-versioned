@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="css/mui.min.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	<link rel="stylesheet" href="css/icon-extra.css" />
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/mui.picker.css" />
+	<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css"/>
+
+
+	<style>
+		.main-content{width: 100%; margin: auto;position: relative;}
+		.title-header{
+			text-align: center;
+			height: 10%;
+			line-height: 4rem;
+			/*vertical-align: bottom;*/
+			border-bottom: 1px solid #bbbbbb;
+			box-sizing:content-box;
+			background: #f8f8f8;color: #101010;
+			position: relative;
+		}
+		.title-header>p.calendar{
+			width: 4.6rem;
+			/*border: 1px solid #ddd;*/
+			text-align: center;
+			line-height: 2.8rem;
+			height: 2.8rem;
+			position: absolute;
+			right: 0.4rem;
+			top: 1rem;
+		}
+		.title-header>div.datas{
+			position: absolute;
+			width: 8rem;
+			height: 2.8rem;
+			line-height: 2.8rem;
+			left: 0;
+			top: 0.6rem;
+			text-align: left;
+		}
+		.title-header>div.datas>p{
+			display: inline-block;
+			margin: 0;
+		}
+
+
+		#refreshContainer{
+			margin-top: 18%;
+			height: 90%;
+		}
+		.bottomArea{width: 100%;height: 10%;position: fixed;bottom: 0;z-index: 2;}
+		.option-area{position: relative;}
+		.option-area>div{float: left;position:absolute; }
+		.option-area>div.save {
+			border-radius: 50%;
+			width: 60px;
+			height: 60px;
+			border: 1px solid #bbb;
+			line-height: 60px;
+			text-align: center;
+			background: #ddd;
+			left: 50%;
+			margin-left: -30px;
+		}
+		.option-area>div.nextitem {
+			width: 100px;
+			right: 20px;
+			margin-top: 20px;
+		}
+		.option-area>div.previtem{
+			width: 100px;
+			left: 20px;
+			margin-top: 20px;
+		}
+		.processing-container{padding: 1rem;}
+		.processing-container>div{margin-bottom: 1.4rem;}
+
+	</style>
+</head>
+<body>
+<div class="main-container">
+	<div class="title-header">
+
+		<span>Task Details</span>
+		<p class="calendar" >
+			<a class="mui-btn mui-btn-success mui-btn-outlined" onclick="logout()">exit</a>
+		</p>
+	</div>
+
+
+	<div class="processing-container">
+		<div>
+			<h5>Location:</h5>
+			<button class="mui-btn mui-btn-success mui-btn-outlined" id="location" style="width: 100%; height: 40px;">Location：</button>
+		</div>
+
+		<div>
+			<h5>Comment:</h5>
+			<textarea name="" id="comment"></textarea>
+			<h5>Photo:</h5>
+			<button style="width: 100%; height: 55px;" class="mui-btn imageup mui-btn-success mui-btn-outlined">Attach Photo</button>
+		</div>
+		<div>
+			<h5>Check Result:</h5>
+			<button class="mui-btn mui-btn-success mui-btn-outlined" id="result" style="width: 100%; height: 40px">Result：</button>
+		</div>
+	</div>
+	<div class="option-area clearfix">
+		<div style="display: none;" onclick="toprevitem()" class="mui-btn mui-btn-success mui-btn-outlined previtem">prev</div>
+		<div class="save mui-btn mui-btn-success mui-btn-outlined" onclick="saveresult()">save</div>
+		<div onclick="tonextitem()" class="nextitem mui-btn mui-btn-success mui-btn-outlined">next</div>
+		
+		
+	</div>	
+	
+<button onclick="submit()" style="width: 100%; bottom: 0px; height: 60px; position: absolute;" class="mui-btn submit mui-btn-success mui-btn-outlined">Submit</button>
+
+</div>	
+</body>
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/mui.enterfocus.js"></script>
+<script src="js/mui.picker.js"></script>
+<script src="js/mui.poppicker.js"></script>
+<script>
+	
+	var commonlocation = "";
+	
+	var submitObject = {
+		
+	}
+	
+	function logout(){
+		location.href="LIFTPROF.html";
+	}
+	
+	var pageindex = 1;
+    function submit()
+    {
+    	
+//  	var hoistway1_comment = plus.storage.getItem("hoistway1_comment");
+		
+				submitObject.Hoistway1_comment = $("#comment").val();
+		}else if(commonlocation=="Lift car"){
+			submitObject.liftcar1_comment = $("#comment").val();
+		}else if(commonlocation=="Lift pit"){
+			submitObject.liftpit1_comment = $("#comment").val();
+		}else if(commonlocation=="Entrance"){
+			submitObject.entrance1_comment = $("#comment").val();
+		
+    	$.ajax({
+		type:"get",
+		url:plus.storage.getItem("url")+"/h5plus/saveTask?deviceid="+
+			GetQueryString("deviceid")+"&type="+
+			plus.storage.getItem("organizationType")+
+			"&userid="+plus.storage.getItem("account")+
+			"&hoistway1_comment="+submitObject.Hoistway1_comment+
+			"&liftcar1_comment="+
+			submitObject.liftcar1_comment+
+			"&liftpit1_comment="+submitObject.liftpit1_comment
+			+"&entrance1_comment="+submitObject.entrance1_comment,
+		dataType:'json',
+		success:function(data){
+			alert("Submit Success");
+			plus.storage.setItem("hoistway1_comment",  "");
+			plus.storage.setItem("entrance1_comment",  "");
+			plus.storage.setItem("liftpit1_comment",  "");
+			plus.storage.setItem("liftcar1_comment",  "");
+			location.href="LIFTPROF.html";
+		},
+		 error:function(XMLHttpRequest, textStatus, errorThrown) {
+			     	console.log(XMLHttpRequest.status+"-----------"+XMLHttpRequest.readyState+"------------------"+textStatus);
+			     }
+	});
+    }
+	function tonextitem(){
+		
+		pageindex++;
+		alert(pageindex);
+		$("#comment").val("");
+		$("#itemIndex").html(pageindex);
+		if(pageindex==1){
+			//alert(pageindex);
+			$(".previtem").css("display","none");
+			$(".nextitem").css("display","block");
+		}else if(pageindex==4){
+			//alert(pageindex);
+			$(".previtem").css("display","block");
+			$(".nextitem").css("display","none");
+		}
+		else{
+			$(".nextitem").css("display","block");
+			$(".previtem").css("display","block");
+		}
+	}
+	
+	function toprevitem(){
+		if(pageindex>1){
+			pageindex--;
+		}
+		alert(pageindex);
+		$("#comment").val("");
+		$("#itemIndex").html(pageindex);
+		if(pageindex==1){
+			//alert(pageindex);
+			$(".previtem").css("display","none");
+			$(".nextitem").css("display","block");
+		}else if(pageindex==4){
+			//alert(pageindex);
+			$(".previtem").css("display","block");
+			$(".nextitem").css("display","none");
+		}
+		else{
+			$(".nextitem").css("display","block");
+			$(".previtem").css("display","block");
+		}
+	}
+	
+	function GetQueryString(name){
+	     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	     var r = window.location.search.substr(1).match(reg);
+	     if(r!=null)return  unescape(r[2]); return null;
+	}
+	
+	$.ajax({
+		type:"get",
+		url:plus.storage.getItem("url")+"/h5plus/findByDeviceid?deviceid="+GetQueryString("deviceid")+"&type="+plus.storage.getItem("organizationType")+"&userid="+plus.storage.getItem("account"),
+		dataType:'json',
+		success:function(data){
+			plus.storage.setItem("hoistway1_comment",  data[0]['job']['hoistway1_comment']);
+			plus.storage.setItem("entrance1_comment",  data[0]['job']['entrance1_comment']);
+			plus.storage.setItem("liftpit1_comment",  data[0]['job']['liftpit1_comment']);
+			plus.storage.setItem("liftcar1_comment",  data[0]['job']['liftcar1_comment']);
+			//plus.storage.setItem("taskid",  data[0]['taskid']);
+		}
+	});
+	
+	function saveresult(){	
+		
+//		plus.storage.setItem("hoistway1_comment", $("#comment").val());	
+		//alert(plus.storage.getItem("hoistway1_comment"));
+//		alert("Save Success");
+		if(commonlocation=="Hoistway"){
+			submitObject.Hoistway1_comment = $("#comment").val();
+		}else if(commonlocation=="Lift car"){
+			submitObject.liftcar1_comment = $("#comment").val();
+		}else if(commonlocation=="Lift pit"){
+			submitObject.liftpit1_comment = $("#comment").val();
+		}else if(commonlocation=="Entrance"){
+			submitObject.entrance1_comment = $("#comment").val();
+		}
+		
+	}
+	
+    function tohistory(){
+        window.history.go(-1);
+    }
+    
+    var picker = new mui.PopPicker();
+    picker.setData([
+    	{value:'Hoistway',text:'Hoistway'},
+    	{value:'Lift car',text:'Lift car'},
+    	{value:'Lift pit',text:'Lift pit'},
+    	{value:'Entrance',text:'Entrance'}
+    	]);
+    $("#location").click(function(){
+        picker.show(function (selectItems) {
+            console.log(selectItems[0].text);//
+            console.log(selectItems[0].value);//
+    		$("#location").html(selectItems[0].value);      
+    		commonlocation=selectItems[0].value;
+    		
+        })
+    });
+
+var statuspicker = new mui.PopPicker();
+    statuspicker.setData([
+    	{value:'Result',text:'Result'},
+    	{value:'ok',text:'ok'},
+    	{value:'no ok',text:'no ok'}
+    	]);
+    $("#result").click(function () {
+        statuspicker.show(function (selectItems) {
+            console.log(selectItems[0].text);//智子
+            console.log(selectItems[0].value);//zz
+            $("#result").html(selectItems[0].value);
+        })
+    })
+
+
+    //调用摄像头
+
+    function plusReady(){
+        // 弹出系统选择按钮框
+        mui("body").on("tap",".imageup",function(){
+            page.imgUp();
+        })
+
+    }
+
+    var page=null;
+    page={
+        imgUp:function(){
+            var m=this;
+            plus.nativeUI.actionSheet({cancel:"cancel",buttons:[
+                {title:"拍照"}
+            ]}, function(e){//1 是拍照  2 从相册中选择
+                switch(e.index){
+                    case 1:clickCamera();break;
+                    case 2:clickGallery();break;
+                }
+            });
+        }
+        //摄像头
+    };
+
+	mui.plusReady(function(){ 
+     document.addEventListener("swipeleft",function(){
+     	//alert(1);
+       toprevitem();
+    });
+    document.addEventListener("swiperight",function(){
+    	//alert(0);
+        tonextitem();
+    });
+});
+    //发送照片
+
+    function clickGallery() {
+        plus.gallery.pick(function(path) {
+            plus.zip.compressImage({
+                src: path,
+                dst: "_doc/chat/gallery/" + path,
+                quality: 20,
+                overwrite: true
+            }, function(e) {
+                var task = plus.uploader.createUpload(server + "upload/chat", {
+                    method: "post"
+                }, function(t, sta) {
+                    console.log(JSON.stringify(t))
+                    if(sta == 200) {
+                        var msg = t.responseText;
+                        var oImg = JSON.parse(msg);
+                        var imgUrl = oImg.urls;
+                        var re = new RegExp("\\\\", "g");
+                        imgUrl = imgUrl.replace(re, "/");
+                        uploadMsg(2, imgUrl);
+                    }
+                });
+                task.addFile(e.target, {});
+                task.start();
+            }, function(err) {
+                console.error("压缩失败：" + err.message);
+            });
+
+        }, function(err) {});
+    };
+
+
+    // 拍照
+
+//  function clickCamera() {
+//      var cmr = plus.camera.getCamera();
+//      var res = cmr.supportedImageResolutions[0];
+//      var fmt = cmr.supportedImageFormats[0];
+//      cmr.captureImage(function(path) {
+//          //plus.io.resolveLocalFileSystemURL(path, function(entry) {
+//          plus.io.resolveLocalFileSystemURL(path, function(entry) {
+//              var localUrl = entry.toLocalURL();
+//              plus.zip.compressImage({
+//                  src: localUrl,
+//                  dst: "_doc/chat/camera/" + localUrl,
+//                  quality: 20,
+//                  overwrite: true
+//              }, function(e) {
+//                  var task = plus.uploader.createUpload(server + "upload/chat", {
+//                      method: "post"
+//                  }, function(t, sta) {
+//                      if(sta == 200) {
+//                          var msg = t.responseText;
+//                          var oImg = JSON.parse(msg);
+//                          var imgUrl = oImg.urls;
+//                          var re = new RegExp("\\\\", "g");
+//                          imgUrl = imgUrl.replace(re, "/");
+//                          console.log(imgUrl);
+//                          uploadMsg(2, imgUrl);
+//                      }
+//                  });
+//                  task.addFile(e.target, {});
+//                  task.start();
+//              }, function(err) {
+//                  console.log("压缩失败：  " + err.message);
+//              });
+//          });
+//      }, function(err) {
+//          console.error("拍照失败：" + err.message);
+//      }, {
+//          index: 1
+//      });
+//  };
+
+    if(window.plus){
+        plusReady();
+    }else{
+        document.addEventListener("plusready",plusReady,false);
+    }
+
+
+
+</script>
+
+
+
+</html>

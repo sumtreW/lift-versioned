@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="css/mui.min.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	<link rel="stylesheet" href="css/icon-extra.css" />
+	<link rel="stylesheet" href="css/common.css" />
+
+	<style>
+		.main-content{width: 100%; margin: auto;position: relative;}
+		.title-header{
+			text-align: center;
+			height:4rem;
+			line-height: 4rem;
+			border-bottom: 1px solid #bbbbbb;
+			box-sizing:content-box;
+			background: #f8f8f8;color: #101010;
+			position: relative;
+		}
+
+		.title-header>div.datas{
+			position: absolute;
+			width: 8rem;
+			height: 2.8rem;
+			line-height: 2.8rem;
+			left: 0;
+			top: 0.6rem;
+			text-align: left;
+		}
+
+		.mui-content{
+			height: inherit !important;
+		}
+
+		#listContainerSumtre>li{
+			padding:  3rem 2rem 0 2rem;
+			background-color: #efeff4;
+		}
+
+		#listContainerSumtre>li>h4,#listContainerSumtre>li>h5{padding: 0;margin: 0;color: #999;}
+
+		.bottomArea{
+			width: 100%;height: 8%;position: fixed;bottom: 0;z-index: 2;}
+
+		.to-left,.to-right{position: absolute;}
+		.to-left{left: 2rem;}
+		.to-right{right: 2rem;}
+	</style>
+</head>
+<body>
+<div class="main-container">
+	<div class="title-header">
+		<div class="datas">
+			<p>
+				<span class="mui-icon mui-icon-arrowleft" onclick="tohistory();"></span>
+			</p>
+
+		</div>
+		<span>Elevator info</span>
+		
+	</div>
+
+	<div>
+		<ul class="mui-table-view mui-table-view-chevron" id="listContainerSumtre">
+			<li>
+				<h4>Device ID:<span id="deviceId"></span></h4>
+				</li><li>
+				<p>Device Name:<span id="DeviceName"></span></p>
+				</li><li>
+				<p>Organization:<span id="Organization"></span></p>
+				</li><li>
+				<p>elevatorModel:<span id="elevatorModel"></span></p>
+				</li><li>
+				<p>Manufacturer:<span id="Manufacturer"></span></p>
+				</li><li>
+				<p>status:<span id="status"></span></p>
+			</li>
+		</ul>
+	</div>
+
+
+</div>
+
+
+<div class="bottomArea">
+	<a class=" to-left mui-btn mui-btn-success mui-btn-outlined" href="http://alhlsgw.lechange.com:9001/LCO/3F05D18PAA00217/0/1/20170830152309/dev_20170830152309_tzkt0tl19e4ekn60.m3u8" class="mui-btn">CCTV</a>
+	<a id="todetail" onclick="todetail()" data-loading-icon="mui-spinner mui-spinner-custom" class="to-right mui-btn mui-btn-success mui-btn-outlined">Start maintained</a>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/mui.enterfocus.js"></script>
+<script type="text/javascript" src="SimpleCalendar/javascripts/simple-calendar.js"></script>
+<script>
+
+    function todetail(){
+        location.href = "Processing.html?deviceid="+GetQueryString("deviceid");
+    }
+
+
+    function tohistory(){
+        window.history.go(-1);
+    }
+
+
+    function GetQueryString(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    }
+
+    // 调用方法
+    var deviceid=GetQueryString("deviceid");
+    //alert(deviceid); //172.18.1.222 192.168.0.101
+    var queryurl=plus.storage.getItem("url")+"/h5plus/findByDeviceid?userid=a@b&deviceid="+deviceid+"&type="+plus.storage.getItem("organizationType");
+    $.ajax({
+        url:queryurl,
+        dataType:'json',
+        type:'get',
+        success:function(data){
+            var status = data[0]['status']=='1'?'to be maintenance':'off';
+            $("#deviceId").html(data[0]['device']['id']);
+			$("#DeviceName").html(data[0]['device']['deviceName']);
+			$("#Organization").html(data[0]['device']['organization']['organizationName']);
+			$("#elevatorModel").html(data[0]['device']['elevatorModel']['elevatorModel']);
+			$("#Manufacturer").html(data[0]['device']['manufacturer']['manufacturerName']);
+			$("#status").html(status);
+			if(status == "off"){
+				$("#todetail").removeAttr("onclick");
+			}
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.status+"-----------"+XMLHttpRequest.readyState+"------------------"+textStatus);
+        }});
+</script>
+</html>

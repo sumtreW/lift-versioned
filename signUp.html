@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			.main-content{width: 80%;margin: auto;position: relative;}
+			.main-content{padding-top: 10%;}
+			.title-header{text-align: center;height: 4rem;line-height: 4rem;border-bottom: 1px solid #bbbbbb;box-sizing:content-box;background: #f8f8f8;color: #101010;}
+			.bottom-input{position: absolute;bottom: 0;width: 100%;}
+			.bottom-input>div{display:inline-block;width: 49%;height: 2.2rem;text-align: center;line-height: 2.2rem;border-top: 1px solid #BBBBBB;}
+			.bottom-input>div:nth-of-type(1){border-right:1px solid #BBBBBB ;}
+		</style>
+	</head>
+	<body>
+		<div class="main-container">
+			<div class="title-header">
+				<span>Sign Up</span>
+			</div>
+			<div class="main-content">
+				<form id="signupform">
+					<p>
+						<input type="text" name="firstName" placeholder="First Name"/>
+					</p>
+					<p>
+						<input type="text" name="lastName" placeholder="Last Name"/>
+					</p>
+					<p>
+						<input type="text" name="email" placeholder="Email"/>
+					</p>
+					<p>
+						<input type="text" name="phone" placeholder="Contact"/>
+					</p>
+					<p>
+						<select name="roleid" id="roleid">
+							
+						</select>
+					</p>
+					<p>
+						<select name="orgid" id="orgid">
+							
+						</select>
+					</p>
+					<p>
+						<input type="password" name="password" placeholder="Password"/>
+					</p>
+					
+					</div>
+					<div class="bottom-input">
+						<div id="signup">Sign Up</div>
+						<div id="cancelsign">Cancel</div>
+					</div>
+				</form>
+	
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script src="js/mui.min.js"></script>
+	<script src="js/mui.enterfocus.js"></script>
+	<script>
+		$.ajax({
+			type:"get",
+			url:plus.storage.getItem("url")+"/h5plus/findAllRole",
+			async:true,
+			dataType:"json",
+			success:function(data){
+				var str = "";
+				for(var i=0;i<data.length;i++){
+					str += "<option value="+data[i].id+">"+data[i].role+"</option>";
+				}
+				$("#roleid").html(str);
+			}
+		});
+		$.ajax({
+			type:"get",
+			url:plus.storage.getItem("url")+"/h5plus/findAllOrg",
+			async:true,
+			dataType:"json",
+			success:function(data){
+				var str = "";
+				for(var i=0;i<data.length;i++){
+					str += "<option value="+data[i].id+">"+data[i].organizationName+"</option>";
+				}
+				$("#orgid").html(str);
+			}
+		});
+		
+		mui(".bottom-input").on('tap','#signup',function(e){
+        	
+        		$.ajax({
+				type:"get",
+				url:plus.storage.getItem("url")+"/h5plus/registration",
+				data:$("#signupform").serialize(),
+				async:true,
+				success:function(data){
+					if(data=="0"){
+						alert("注册成功");
+						location.href="login.html";
+					}else if(data == "1"){
+						alert("注册失败");
+						location.reload();
+					}
+				}
+			});
+		  
+		}) 
+		
+		mui(".bottom-input").on('tap','#cancelsign',function(e){
+        	
+        		location.href = "login.html";
+		  
+		}) 
+
+	</script>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			.main-content{width: 80%;margin: auto;position: relative;}
+			.main-content{padding-top: 10%;}
+			.title-header{text-align: center;
+			height: 4rem;
+			line-height: 4rem;
+			border-bottom: 1px solid #bbbbbb;
+			box-sizing:content-box;
+			background: #f8f8f8;color: #101010;
+			position: relative;
+			}
+			.title-header>a{
+				width: 4.6rem;
+				border: 1px solid #ddd;
+				text-align: center;
+				line-height: 2.8rem;
+				height: 2.8rem;
+				position: absolute;
+				right: 0.4rem;
+				top: 0.6rem;
+			}
+			.user-info{}
+			.user-info>div{float: left;}
+			.user-info>div:nth-of-type(1){
+				width: 8rem;
+				height: 8rem;
+				border: 1px solid #ccc;
+				border-radius: 50%;
+				text-align: center;
+				line-height: 8rem;
+			}
+			.user-info>div:nth-of-type(2)>p:nth-of-type(1){
+				color: #101010;
+				font-size: 1.6rem;
+				padding:2.9rem 0 0 1rem ;
+			}
+			.user-info>div:nth-of-type(2)>p:nth-of-type(2){
+				padding:0 0 0 1rem ;
+			}
+			.function-item>p:nth-of-type(1){
+				margin-top: 5rem;
+			}
+			.function-item>p{
+				margin: auto;
+				margin-bottom: 2.2rem;
+				width: 80%;
+				height: 3rem;
+				border: 1px solid #CCCCCC;
+				text-align: center;
+				line-height: 3rem;
+			}
+			.logout{display: inline-block;}
+		</style>
+	</head>
+	<body>
+		<div class="main-container">
+			<div class="title-header">
+				<span>LIFTPROF</span>
+				<a class="logout" href="login.html">sign out</a>
+			</div>
+			<div class="main-content">
+				
+				<div class="mui-clearfix user-info">
+					<div>
+						img
+					</div>
+					<div>
+						<p id="username"></p>
+						<br/>
+						<p id="role"></p>
+						<!--<tel id="phone"></tel>-->
+					</div>
+				</div>
+				<div class="function-item">
+					<p>
+						<a href="myTask.html">My Task</a>					
+					</p>
+				
+					<p>
+						<a href="liftList.html">Lift list</a>
+					</p>
+				
+					<p>
+						<a href="Notifications.html">Notifications</a>
+					</p>
+				</div>
+				
+				
+			</div>
+			
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+		window.onload=function(){ 
+		var tempaccount = plus.storage.getItem("account");
+		var temppassword = plus.storage.getItem("password");
+		var lastName =	plus.storage.getItem("lastName");
+		var role =		plus.storage.getItem("role");
+		var phone =		plus.storage.getItem("phone");
+		var organization = plus.storage.getItem("organization");
+			$("#role").html("北京 &aacute; "+role);
+			$("#username").text(lastName);
+			$("#phone").text(phone);
+			
+	}
+		
+	</script>
+</html>
