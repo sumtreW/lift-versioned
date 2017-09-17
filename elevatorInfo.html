@@ -87,7 +87,9 @@
 
 <div class="bottomArea">
 	<a class=" to-left mui-btn mui-btn-success mui-btn-outlined" href="http://alhlsgw.lechange.com:9001/LCO/3F05D18PAA00217/0/1/20170830152309/dev_20170830152309_tzkt0tl19e4ekn60.m3u8" class="mui-btn">CCTV</a>
+
 	<a id="todetail" onclick="todetail()" data-loading-icon="mui-spinner mui-spinner-custom" class="to-right mui-btn mui-btn-success mui-btn-outlined">Start maintained</a>
+
 </div>
 </body>
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
@@ -116,7 +118,9 @@
     // 调用方法
     var deviceid=GetQueryString("deviceid");
     //alert(deviceid); //172.18.1.222 192.168.0.101
+
     var queryurl=plus.storage.getItem("url")+"/h5plus/findByDeviceid?userid=a@b&deviceid="+deviceid+"&type="+plus.storage.getItem("organizationType");
+
     $.ajax({
         url:queryurl,
         dataType:'json',
@@ -129,9 +133,11 @@
 			$("#elevatorModel").html(data[0]['device']['elevatorModel']['elevatorModel']);
 			$("#Manufacturer").html(data[0]['device']['manufacturer']['manufacturerName']);
 			$("#status").html(status);
+
 			if(status == "off"){
 				$("#todetail").removeAttr("onclick");
 			}
+
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
             console.log(XMLHttpRequest.status+"-----------"+XMLHttpRequest.readyState+"------------------"+textStatus);

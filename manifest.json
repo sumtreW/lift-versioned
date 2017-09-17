@@ -173,7 +173,11 @@
 				"ios": {
 					"iphone": {
 						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
+<<<<<<< HEAD
 						"retina35": "images/raw_1503459065.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+=======
+						"retina35": "images/raw_1503459007.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+>>>>>>> 0751bba449433d07f3c173199abd3b499606622c
 						"retina40": "images/raw_1503459007.png",
 						"retina55": "images/raw_1503459007.png",
 						"retina47": "images/raw_1503459007.png",

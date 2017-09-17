@@ -41,6 +41,7 @@
 					<input type="text" id="password" placeholder="Password"/>
 				</p>
 				<p class="button-container">
+
 					<button class="to-left mui-btn mui-btn-success mui-btn-outlined"><span onclick="signup()">Sign Up  </span></button>
 					<button class="to-right mui-btn mui-btn-success mui-btn-outlined"><span onclick="Login()">Sign In  </span></button>
 					  
@@ -62,7 +63,7 @@
 			
 //			test.lg.softgrid.exdorean.com:80
 			plus.storage.setItem("url","http://test.lg.softgrid.exdorean.com:80");
-			
+
 			mui.plusReady(function() {
 				mui.toast('正在验证本地缓存身份信息，请稍后！');
 				var tempaccount = plus.storage.getItem("account");
@@ -92,7 +93,7 @@
 					account: accountBox.value,
 					password: passwordBox.value
 				};
-				
+
 				app.login(loginInfo, function(err) {
 					if (err) {
 						plus.nativeUI.toast(err);

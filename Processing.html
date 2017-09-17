@@ -114,11 +114,9 @@
 		<div style="display: none;" onclick="toprevitem()" class="mui-btn mui-btn-success mui-btn-outlined previtem">prev</div>
 		<div class="save mui-btn mui-btn-success mui-btn-outlined" onclick="saveresult()">save</div>
 		<div onclick="tonextitem()" class="nextitem mui-btn mui-btn-success mui-btn-outlined">next</div>
-		
-		
 	</div>	
 	
-<button onclick="submit()" style="width: 100%; bottom: 0px; height: 60px; position: absolute;" class="mui-btn submit mui-btn-success mui-btn-outlined">Submit</button>
+<button onclick="submit()" style="width: 100%; bottom: 0; height: 60px; position: absolute;" class="mui-btn submit mui-btn-success mui-btn-outlined">Submit</button>
 
 </div>	
 </body>
@@ -133,7 +131,7 @@
 	
 	var submitObject = {
 		
-	}
+	};
 	
 	function logout(){
 		location.href="LIFTPROF.html";
@@ -144,15 +142,15 @@
     {
     	
 //  	var hoistway1_comment = plus.storage.getItem("hoistway1_comment");
-		
+		if(commonlocation=="hoistway1_comment"){
 				submitObject.Hoistway1_comment = $("#comment").val();
 		}else if(commonlocation=="Lift car"){
 			submitObject.liftcar1_comment = $("#comment").val();
 		}else if(commonlocation=="Lift pit"){
 			submitObject.liftpit1_comment = $("#comment").val();
-		}else if(commonlocation=="Entrance"){
-			submitObject.entrance1_comment = $("#comment").val();
-		
+		}else if(commonlocation=="Entrance") {
+            submitObject.entrance1_comment = $("#comment").val();
+        }
     	$.ajax({
 		type:"get",
 		url:plus.storage.getItem("url")+"/h5plus/saveTask?deviceid="+
@@ -164,6 +162,7 @@
 			submitObject.liftcar1_comment+
 			"&liftpit1_comment="+submitObject.liftpit1_comment
 			+"&entrance1_comment="+submitObject.entrance1_comment,
+
 		dataType:'json',
 		success:function(data){
 			alert("Submit Success");
@@ -182,6 +181,7 @@
 		
 		pageindex++;
 		alert(pageindex);
+
 		$("#comment").val("");
 		$("#itemIndex").html(pageindex);
 		if(pageindex==1){
@@ -203,7 +203,7 @@
 		if(pageindex>1){
 			pageindex--;
 		}
-		alert(pageindex);
+
 		$("#comment").val("");
 		$("#itemIndex").html(pageindex);
 		if(pageindex==1){
@@ -272,6 +272,7 @@
         picker.show(function (selectItems) {
             console.log(selectItems[0].text);//
             console.log(selectItems[0].value);//
+
     		$("#location").html(selectItems[0].value);      
     		commonlocation=selectItems[0].value;
     		

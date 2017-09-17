@@ -111,6 +111,7 @@
 				padding:0 0.5rem;
 			}
 			
+
 			.active-mark{
 				background: #ebebeb;
 			}
@@ -138,6 +139,7 @@
 				</div>
 				<span>Lift List</span>
 				<p class="calendar" id="showUserPicker">
+
 					<select name="" id="itemchenge">
 						<!--<option value="">Status</option>-->
 						<option value="1">To be maintained</option>
@@ -145,6 +147,7 @@
 						<option value="3">suspended</option>
 						<option value="4">Maintenance completed</option>
 						<option value="5">Overdue</option>
+
 						
 					</select>
 				</p>
@@ -154,14 +157,16 @@
 			
 			<div id="sumtreList">
 				<div>
+					
 					<input type="text" placeholder="搜索" value=""/>
+
 				</div>
 					<!--下拉刷新容器-->
 				<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
 				  <div class="mui-scroll">
 				    <!--数据列表-->
 				    <ul class="mui-table-view mui-table-view-chevron" id="listContainerSumtre">
-			
+
 				    </ul>
 				  </div>
 				</div>
@@ -232,12 +237,15 @@
 			
 		})
 		
+
 		function pullfresh() {
 
 			   $.ajax({//172.18.1.222 192.168.0.101
 			     //url:"http://172.18.1.222:8080/h5plus/findDevicesByStatus?userid=a@b&status=1&type=1",
 			    // devices
+
 			     url:plus.storage.getItem("url")+"/h5plus/devices?userid="+plus.storage.getItem("account"),
+
 			     
 			     dataType:'json',
 //			     processData: false, 

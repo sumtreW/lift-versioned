@@ -28,8 +28,11 @@
 		//var url = "http://www.ycjwrq.com/WebService1.asmx/Login?pUserName=" + loginInfo.account + "&pUserPwd=" + loginInfo.password;
 		//home ip
 		var url = plus.storage.getItem("url")+"/h5plus/login?pUserName=" + loginInfo.account + "&pUserPwd=" + loginInfo.password;
+<<<<<<< HEAD
 //		alert(plus.storage.getItem("url"));
 //		var url = "http://192.168.31.157:8080/h5plus/login?pUserName=" + loginInfo.account + "&pUserPwd=" + loginInfo.password;
+=======
+>>>>>>> 0751bba449433d07f3c173199abd3b499606622c
 		var xhr = null;
 		if (xhr) {
 			return callback('XMLHttpRequest请求已创建');
@@ -104,7 +107,13 @@
 
 					if (xhr.status == 200) {
 						var data = eval('(' + xhr.responseText + ')');
+<<<<<<< HEAD
 						if (data.s == "1") {
+=======
+						alert(data);
+						if (data.s == "1") {
+							alert(data.s);
+>>>>>>> 0751bba449433d07f3c173199abd3b499606622c
 							return callback();
 						}
 						else if(data.s == "2"){
